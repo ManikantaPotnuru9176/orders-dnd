@@ -1,8 +1,10 @@
-import React from "react";
-import { Flex, Stack, Heading } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Stack, Heading } from "@chakra-ui/react";
 import Section from "./Section";
+import { ordersData } from "./ordersData";
 
 const Orders = () => {
+  const [orders, setOrders] = useState([...ordersData]);
   const sections = [
     { section: "NEW ORDERS", status: "New Order" },
     { section: "IN PROGRESS", status: "In Progress" },
@@ -23,7 +25,12 @@ const Orders = () => {
         spacing={4}
       >
         {sections.map((section, index) => (
-          <Section key={index} section={section} />
+          <Section
+            key={index}
+            section={section}
+            orders={orders.filter((order) => order.status === section.status)}
+            setOrders={setOrders}
+          />
         ))}
       </Stack>
     </Stack>

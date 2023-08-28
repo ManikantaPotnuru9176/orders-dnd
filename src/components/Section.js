@@ -3,29 +3,46 @@ import {
   Box,
   Flex,
   Heading,
-  Image,
   VStack,
-  HStack,
-  Text,
   Divider,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { orders } from "./ordersData";
+import { useDrop } from "react-dnd";
 import CardItem from "./CardItem";
 
-const Section = ({ section }) => {
+const Section = ({ section, orders, setOrders }) => {
+  const [{ isOver }, dropRef] = useDrop({
+    accept: "CARD",
+    drop: (item) => {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === item.id ? { ...order, status: section.status } : order
+        )
+      );
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  });
+
   return (
-    <Box p={5} rounded="lg" shadow="2xl">
+    <Box
+      p={5}
+      minW={{md:"320px"}}
+      rounded="lg"
+      shadow="2xl"
+      ref={dropRef}
+      borderColor={isOver ? useColorModeValue("gray", "white") : ""}
+      borderWidth={isOver ? "2px" : "0px"}
+    >
       <Flex justify={"center"}>
         <VStack>
           <Heading fontSize="xl">{section.section}</Heading>
-          <Divider m={2} />
+          <Divider m={2} minW={{md:"300px"}} />
           <VStack spacing={4}>
-            {orders
-              .filter((order) => order.status === section.status)
-              .map((order, index) => (
-                <CardItem key={index} order={order} />
-              ))}
+            {orders.map((order, index) => (
+              <CardItem key={index} order={order} />
+            ))}
           </VStack>
         </VStack>
       </Flex>

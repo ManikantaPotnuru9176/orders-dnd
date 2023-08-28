@@ -1,6 +1,6 @@
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { Box, Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 const CartIcon = () => {
   return (

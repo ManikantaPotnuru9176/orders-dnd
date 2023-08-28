@@ -1,19 +1,18 @@
 import React from "react";
-import {
-  Button,
-  Flex,
-  Heading,
-  Text,
-  HStack,
-  Box,
-  VStack,
-  useColorModeValue,
-  Stack,
-} from "@chakra-ui/react";
+import { Flex, Heading, HStack, Box, Stack } from "@chakra-ui/react";
 import { StarIcon, CloseIcon } from "@chakra-ui/icons";
+import { useDrag } from "react-dnd";
 
 const CardItem = ({ order }) => {
   const { id, img, name, status, rating, cost } = order;
+
+  const [{ isDragging }, dragRef] = useDrag({
+    type: "CARD",
+    item: { id, status },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
 
   const statusColors = [
     { status: "New Order", color: "#fff0df" },
@@ -31,6 +30,8 @@ const CardItem = ({ order }) => {
       rounded="lg"
       overflow="hidden"
       position="relative"
+      ref={dragRef}
+      opacity={isDragging ? 0.5 : 1}
     >
       <Flex position="absolute" top="0" right="0" p="2">
         {(order.status === "New Order" || order.status === "In Progress") && (
