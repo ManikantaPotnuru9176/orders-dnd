@@ -32,6 +32,7 @@ const CardItem = ({ order }) => {
       position="relative"
       ref={dragRef}
       opacity={isDragging ? 0.2 : 1}
+      cursor={isDragging ? "grabbing" : "grab"}
     >
       <Flex position="absolute" top="0" right="0" p="2">
         {(order.status === "New Order" || order.status === "In Progress") && (
