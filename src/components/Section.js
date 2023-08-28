@@ -16,15 +16,15 @@ import CardItem from "./CardItem";
 const Section = ({ section }) => {
   return (
     <Box p={5} rounded="lg" shadow="2xl">
-      <Flex>
+      <Flex justify={"center"}>
         <VStack>
           <Heading fontSize="xl">{section.section}</Heading>
           <Divider m={2} />
           <VStack spacing={4}>
             {orders
               .filter((order) => order.status === section.status)
-              .map((order) => (
-                <CardItem order={order} />
+              .map((order, index) => (
+                <CardItem key={index} order={order} />
               ))}
           </VStack>
         </VStack>

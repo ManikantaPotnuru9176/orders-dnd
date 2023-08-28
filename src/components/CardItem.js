@@ -8,8 +8,9 @@ import {
   Box,
   VStack,
   useColorModeValue,
+  Stack,
 } from "@chakra-ui/react";
-import { StarIcon } from "@chakra-ui/icons";
+import { StarIcon, CloseIcon } from "@chakra-ui/icons";
 
 const CardItem = ({ order }) => {
   const { id, img, name, status, rating, cost } = order;
@@ -25,17 +26,22 @@ const CardItem = ({ order }) => {
     <Flex
       w="300px"
       mx="auto"
-      h="160px"
+      h={{ base: "110px", md: "100px" }}
       shadow="xl"
       rounded="lg"
       overflow="hidden"
+      position="relative"
     >
+      <Flex position="absolute" top="0" right="0" p="2">
+        {(order.status === "New Order" || order.status === "In Progress") && (
+          <CloseIcon cursor={"pointer"} />
+        )}
+      </Flex>
       <Box
         w={1 / 3}
         bgSize="cover"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1494726161322-5360d4d0eeae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80')",
+          backgroundImage: `url(${img})`,
         }}
       ></Box>
 
@@ -46,11 +52,15 @@ const CardItem = ({ order }) => {
           md: 2,
         }}
       >
-        <Heading fontSize="xl" fontWeight="bold">
-          {name}
-        </Heading>
+        <Stack direction={"row"}>
+          <Heading fontWeight="bold" fontSize="lg">
+            {name + " - "}
+          </Heading>
+          <Heading fontWeight="bold" fontSize="lg">
+            {cost}
+          </Heading>
+        </Stack>
         <HStack py="2">
-          <Text>Order Status: </Text>
           <Box
             bg={
               statusColors
@@ -60,6 +70,7 @@ const CardItem = ({ order }) => {
             color="black"
             p="1px"
             borderRadius="12px"
+            fontSize={"12px"}
           >
             {status}
           </Box>
@@ -69,23 +80,6 @@ const CardItem = ({ order }) => {
             <StarIcon key={i} color={rating <= i && "gray.500"} />
           ))}
         </HStack>
-
-        <Flex mt={3} alignItems="center" justifyContent="space-between">
-          <Heading color="white" fontWeight="bold" fontSize="lg">
-            {cost}
-          </Heading>
-          {(order.status === "New Order" || order.status === "In Progress") && (
-            <Button
-              p={2}
-              fontSize="xs"
-              fontWeight="bold"
-              rounded="lg"
-              shadow="xl"
-            >
-              Cancel
-            </Button>
-          )}
-        </Flex>
       </Box>
     </Flex>
   );

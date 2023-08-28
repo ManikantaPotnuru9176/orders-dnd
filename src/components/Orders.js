@@ -15,9 +15,15 @@ const Orders = () => {
       <Heading textAlign="center" pt={5}>
         Orders DND
       </Heading>
-      <Stack direction="row" pt={"40px"} justify="center" spacing={4}>
-        {sections.map((section) => (
-          <Section section={section} />
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        pt={"40px"}
+        p={{ base: "2", md: "0" }}
+        justify="center"
+        spacing={4}
+      >
+        {sections.map((section, index) => (
+          <Section key={index} section={section} />
         ))}
       </Stack>
     </Stack>
