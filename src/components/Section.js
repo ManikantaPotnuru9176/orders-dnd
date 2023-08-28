@@ -28,17 +28,17 @@ const Section = ({ section, orders, setOrders }) => {
   return (
     <Box
       p={5}
-      minW={{md:"320px"}}
+      minW={"320px"}
       rounded="lg"
       shadow="2xl"
       ref={dropRef}
-      borderColor={isOver ? useColorModeValue("gray", "white") : ""}
+      borderColor={isOver ? "gray" : ""}
       borderWidth={isOver ? "2px" : "0px"}
     >
       <Flex justify={"center"}>
         <VStack>
           <Heading fontSize="xl">{section.section}</Heading>
-          <Divider m={2} minW={{md:"300px"}} />
+          <Divider m={2} minW={"300px"} />
           <VStack spacing={4}>
             {orders.map((order, index) => (
               <CardItem key={index} order={order} />
